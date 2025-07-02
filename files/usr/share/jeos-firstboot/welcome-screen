@@ -48,8 +48,13 @@ on_all_consoles() {
 	# Needed to tell apart errors and escape
 	export DIALOG_ERROR=254
 	# The linux fbcon uses this, most serial consoles should be fine too
-	export TERM=linux
-
+	# Use xterm on WSL otherwise Windows 10 cmd.exe
+	# will run into issues with encoding in both text and borders
+	if grep -qiw 'microsoft' /proc/version 2>/dev/null; then
+		export TERM=xterm-256color
+	else
+		export TERM=linux
+	fi
 	# Create a FIFO for communicating the status
 	fifodir="$(mktemp -d)"
 	mkfifo "${fifodir}/fifo"
