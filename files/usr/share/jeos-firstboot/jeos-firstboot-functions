@@ -36,11 +36,6 @@ list=
 password=''
 modules=()
 
-# Stub for welcome_screen_with_console_switch, redefined by the welcome-screen
-# file when sourced by jeos-firstboot. Modules may call this function
-# unconditionally, so it needs to be defined even when called via jeos-config.
-welcome_screen_with_console_switch() { :; }
-
 _find_modules() {
 	local f
 	for f in /etc/jeos-firstboot/modules/* "${jeos_prefix?}/share/jeos-firstboot/modules"/*; do
@@ -237,5 +232,10 @@ get_credential()
 	[ -e "$CREDENTIALS_DIRECTORY/$name" ] || return 1
 	read -r "$var" < "$CREDENTIALS_DIRECTORY/$name" || [ -n "${!var}" ]
 }
+
+# Stub for welcome_screen_with_console_switch, redefined by the welcome-screen
+# file when sourced by jeos-firstboot. Modules may call this function
+# unconditionally, so it needs to be defined even when called via jeos-config.
+welcome_screen_with_console_switch() { :; }
 
 # vim: syntax=sh
